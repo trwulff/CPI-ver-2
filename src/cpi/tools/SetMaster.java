@@ -2,7 +2,7 @@ package cpi.tools;
 
 public class  SetMaster <Type>{
 	
-	Object [] Default=new Object[1];
+	Type [] Default=(Type[])new Object[1];
 	Type [] array;
 	String className;
 	boolean isArray;
@@ -26,8 +26,10 @@ public class  SetMaster <Type>{
 	
 // End of Constructors	
 	
-	protected void Constructor(String name,Object Default [],boolean setPersistance)
+	protected void Constructor(String name,Type Default [],boolean setPersistance)
 	{
+		value=Default[0];
+		array=Default;
 		System.out.println(Default[0]);
 		System.out.println(className);
 		

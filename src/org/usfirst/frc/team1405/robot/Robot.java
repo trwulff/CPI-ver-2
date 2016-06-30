@@ -32,8 +32,10 @@ public class Robot extends IterativeRobot {
         System.out.println ("robotInit");
         Integer D []={1,2,3};
         Set<Integer> var=new Set<Integer>("Name",D);
+        System.out.println(var.Array()[1]);
         int Di=5;
         Set<Integer> vari=new Set<Integer>("Name",Di);
+        System.out.println(vari.Value(10));
         System.out.println ("End robotInit");
         
         
