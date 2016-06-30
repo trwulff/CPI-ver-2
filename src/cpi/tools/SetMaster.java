@@ -2,38 +2,33 @@ package cpi.tools;
 
 public class  SetMaster <Type>{
 	
-	Type [] Default=(Type[])new Object[1];
-	Type [] array;
+	Type  Default=(Type)new Object();
 	String className;
-	boolean isArray;
 	Type value;
+	boolean isArray;
 	
 // Begin Constructors
-	public SetMaster(String name,Type Default [],boolean setPersistance)
+	public SetMaster(String name,Type Default,boolean setPersistance)
 	{
 		this.Default=Default;
 		className=Default.getClass().getSimpleName();
-		isArray=true;
-		Constructor(name,this.Default,setPersistance);
-	}
-	public SetMaster(String name,Type Default,boolean setPersistance)
-	{
-		this.Default[0]=Default;
-		className=Default.getClass().getSimpleName();
-		isArray=false;
-		Constructor(name,this.Default,setPersistance);
-	}
-	
-// End of Constructors	
-	
-	protected void Constructor(String name,Type Default [],boolean setPersistance)
-	{
-		value=Default[0];
-		array=Default;
-		System.out.println(Default[0]);
 		System.out.println(className);
+
+
+		value=Default;
+		if(className.contains("[]")){
+			isArray=true;
+			className=className.substring(0, className.length()-2);
+			System.out.println(className);
+		}else{
+			isArray=false;
+		}
 		
-	}
+	}	
+	// End of Constructors	
+	
+	
+	
 	protected void typeCheck(){
 		
 	}
@@ -44,21 +39,17 @@ public class  SetMaster <Type>{
 	public Type Value(Type value){
 		this.value=value;
 		return this.value;
-	}
-	public Type [] Array(){	
-		return array;
 	}	
-	public Type [] Array(Type [] value){
-		this.array=value;
-		return this.array;
-	}
-	public Type  Element(int item){	
-		return array[item];
-	}	
-	public Type Element(int item, Type value){
-		this.array[item]=value;
-		return this.array[item];
+	public Type Value(Object value,int element){
+		if(isArray){
+			Object[] tmp=(Object[])this.value;
+			tmp[element]=value;
+			this.value=(Type)tmp;
+		}else{
+			this.value=(Type)value;
+		}
+		return this.value;
 	}
 
-
+	// End of Constructors	
 }
