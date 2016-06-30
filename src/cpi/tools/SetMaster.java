@@ -1,16 +1,33 @@
 package cpi.tools;
 
+import edu.wpi.first.wpilibj.networktables.*;
+
 public class  SetMaster <Type>{
 	
 	Type  Default=(Type)new Object();
 	String className;
 	Type value;
-	boolean isArray;
+	boolean isArray=false;
+	boolean isLocked=false;
+	boolean isFirst=true;
+	static boolean isHerdCode=true;
+	boolean isPersistent;
+	public static String TITLE="Robot";
+	String table;
+	String key;
+	public static final String SEPARATOR= Character.toString( NetworkTable.PATH_SEPARATOR);
 	
 // Begin Constructors
-	public SetMaster(String name,Type Default,boolean setPersistance)
+	public SetMaster(String table,String key,Type Default,boolean setPersistance)
 	{
+		if(isFirst){
+			// Initialize NetworkTables here
+			isFirst=false;
+		}
 		this.Default=Default;
+		this.table=table;
+		this.key=key;
+		isPersistent=setPersistance;
 		className=Default.getClass().getSimpleName();
 		System.out.println(className);
 
@@ -27,11 +44,7 @@ public class  SetMaster <Type>{
 	}	
 	// End of Constructors	
 	
-	
-	
-	protected void typeCheck(){
-		
-	}
+
 
 	public Type Value(){
 		return value;
@@ -50,6 +63,9 @@ public class  SetMaster <Type>{
 		}
 		return this.value;
 	}
+	
+	public void Lock(boolean setLocked){
+		isLocked=setLocked;
+	}
 
-	// End of Constructors	
 }

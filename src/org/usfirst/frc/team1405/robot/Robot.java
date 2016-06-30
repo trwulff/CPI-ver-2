@@ -31,12 +31,12 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putData("Auto choices", chooser);
         System.out.println ("robotInit");
         Double D []={1.0,2.,3.};
-        Set<Double[]> var=new Set<Double[]>("Name",D);
+        Set<Double[]> var=new Set<Double[]>("Table","Name",D);
         System.out.println(var.Value()[1]);
         var.Value(99.,1);
         System.out.println(var.Value()[1]);
         int Di=5;
-        Set<Integer> vari=new Set<Integer>("Name",Di);
+        Set<Integer> vari=new Set<Integer>("Table","Name",Di);
         System.out.println(vari.Value(10));
         System.out.println(vari.Value(30,3));
         System.out.println ("End robotInit");
