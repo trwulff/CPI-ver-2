@@ -2,8 +2,8 @@ package cpi;
 
 import cpi.tools.SetMaster;
 
-public class Set <Type> extends SetMaster <Type> {
-	public Set(String table,String name,Type Default){
+public class Set  extends SetMaster  {
+	public Set(String table,String name,Object Default){
 		super(table,name,Default,true);
 	}
 

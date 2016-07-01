@@ -32,15 +32,13 @@ public class Robot extends IterativeRobot {
         System.out.println ("robotInit");
         Double D []={1.0,2.,3.};
         System.out.println ("Robot - 34");
-        Set<Double[]> var=new Set<Double[]>("Table","Name1",D);
-        System.out.println ("Robot - 36");
-//        System.out.println(var.Value()[1]);
-//        var.Value(99.,1);
-//        System.out.println(var.Value()[1]);
+        Set var=new Set("Table","Name1",D);
+        System.out.println ("Robot - #"+cpi.tools.SetMaster.lineNumber());
+//        var.ValueArray(99.,1);
+        System.out.println(var.Value());
         Double Di=5.;
-        Set<Double> vari=new Set<Double>("Table","Name2",Di);
- //       System.out.println(vari.Value(10.));
- //       System.out.println(vari.Value(30.,3));
+        Set vari=new Set("Table","Name2",Di);
+        System.out.println(vari.Value(10.));
         System.out.println ("End robotInit");
         
         

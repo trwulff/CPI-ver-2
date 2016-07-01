@@ -3,11 +3,13 @@ package cpi.tools;
 import edu.wpi.first.wpilibj.networktables.*;
 import java.util.Arrays;
 
-public class  SetMaster <Type>{
-	
-	Type  Default=(Type)new Object();
+public class  SetMaster {
+
+	Object  Default;
+	Object  DefaultArray[];
 	String className;
-	Type value;
+	Object value;
+	Object valueArray[];
 	boolean isArray=false;
 	boolean isLocked=false;
 	boolean isFirst=true;
@@ -20,7 +22,7 @@ public class  SetMaster <Type>{
 	NetworkTable table;
 	
 // Begin Constructors
-	public SetMaster(String table,String key,Type Default,boolean setPersistance)
+	public SetMaster(String table,String key,Object Default,boolean setPersistance)
 	{
 		if(isFirst){ // this is done once upon  the first instanciation
 			// Initialize NetworkTables here
@@ -43,44 +45,40 @@ public class  SetMaster <Type>{
 			isArray=false;
 		}
 		this.table=NetworkTable.getTable(TITLE+"/"+tableName);
-		System.out.println ("SetMaster - #46");
-		value=(Type)this.table.getValue(this.key, (Object)this.Default);
-//		value = this.Default;
-		System.out.println ("SetMaster - #48");
+		System.out.println ("SetMaster - #"+lineNumber());
+		value=this.table.getValue(this.key, this.Default);
+		this.table.putValue(key, value);
+		System.out.println ("SetMaster - #"+lineNumber());
+		
 	}	
 	// End of Constructors	
 	
 
 
-	public Type Value(){
+	public Object Value(){
 		return value;
 	}	
-	public Type Value(Type value){
-		if(isArray){
-			if(Arrays.equals ((Object[])value, (Object[])this.value))return this.value;
-		}
-		else{
+
+	public Object[] ValueArray(){
+		return valueArray;
+	}	
+	public Object Value(Object value){
 			if(value==this.value)return this.value;
-		}
 		this.value=value;
 		table.putValue(key, this.value);
 		return this.value;
 	}	
-	public Type Value(Object value,int element){
-		if(isArray){
-			Object[] tmp=(Object[])this.value;
-			if(tmp[element]==value)return this.value;
-			tmp[element]=value;
-			this.value=(Type)tmp;
-		}else{
-			this.value=(Type)value;
-		}
-		table.putValue(key, this.value);
-		return this.value;
+	public Object[] ValueArray(Object value,int element){
+		
+		table.putValue(key, valueArray);
+		return this.valueArray;
 	}
 	
 	public void Lock(boolean setLocked){
 		isLocked=setLocked;
 	}
 
+	public static int lineNumber(){
+		return Thread.currentThread().getStackTrace()[2].getLineNumber();
+	}
 }
