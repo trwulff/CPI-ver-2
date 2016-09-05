@@ -33,7 +33,7 @@ public class Robot extends IterativeRobot {
         Double D []={1.0,2.,3.};
         System.out.println ("Robot - 34");
         Set var=new Set("Table","Name1",D);
-        System.out.println ("Robot - #"+cpi.tools.SetMaster.lineNumber());
+        System.out.println ("Robot - #"+cpi.tools.SetBase.lineNumber());
 //        var.ValueArray(99.,1);
         System.out.println(var.Value());
         Double Di=5.;
