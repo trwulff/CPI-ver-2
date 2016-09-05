@@ -15,7 +15,6 @@ public class  SetBase <Type>{
 	boolean isFirst=true;
 	static boolean isHerdCode=true;
 	boolean isPersistent;
-	public static String TITLE="Robot";
 	String tableName;
 	String key;
 	NetworkTable table;
@@ -41,7 +40,7 @@ public class  SetBase <Type>{
 		}else{
 			isArray=false;
 		}
-		this.table=NetworkTable.getTable(TITLE+"/"+tableName);
+		this.table=NetworkTable.getTable(Constants.TITLE+"/"+tableName);
 		value=(Type)this.table.getValue(this.key, this.Default);
 		this.table.putValue(key, value);
 		System.out.println ("SetBase - #"+lineNumber());
@@ -55,19 +54,11 @@ public class  SetBase <Type>{
 		return value;
 	}	
 
-	public Object[] ValueArray(){
-		return valueArray;
-	}	
-	public Object Value(Type value){
+	public Type Value(Type value){
 			if(value==this.value)return this.value;
 		this.value=value;
 		table.putValue(key, this.value);
 		return this.value;
-	}	
-	public Object[] ValueArray(Object value,int element){
-		
-		table.putValue(key, valueArray);
-		return this.valueArray;
 	}
 	
 	public void Lock(boolean setLocked){
