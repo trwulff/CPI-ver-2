@@ -3,12 +3,12 @@ package cpi.tools;
 import edu.wpi.first.wpilibj.networktables.*;
 import java.util.Arrays;
 
-public class  SetBase {
+public class  SetBase <Type>{
 
-	Object  Default;
+	Type  Default;
 	Object  DefaultArray[];
 	String className;
-	Object value;
+	Type value;
 	Object valueArray[];
 	boolean isArray=false;
 	boolean isLocked=false;
@@ -18,11 +18,10 @@ public class  SetBase {
 	public static String TITLE="Robot";
 	String tableName;
 	String key;
-	public static final String SEPARATOR= Character.toString( NetworkTable.PATH_SEPARATOR);
 	NetworkTable table;
 	
 // Begin Constructors
-	public SetBase(String table,String key,Object Default,boolean setPersistance)
+	public SetBase(String table,String key,Type Default,boolean setPersistance)
 	{
 		if(isFirst){ // this is done once upon  the first instanciation
 			// Initialize NetworkTables here
@@ -39,14 +38,11 @@ public class  SetBase {
 
 		if(className.contains("[]")){
 			isArray=true;
-			className=className.substring(0, className.length()-2);
-			System.out.println(className);
 		}else{
 			isArray=false;
 		}
 		this.table=NetworkTable.getTable(TITLE+"/"+tableName);
-		System.out.println ("SetBase - #"+lineNumber());
-		value=this.table.getValue(this.key, this.Default);
+		value=(Type)this.table.getValue(this.key, this.Default);
 		this.table.putValue(key, value);
 		System.out.println ("SetBase - #"+lineNumber());
 		
@@ -55,14 +51,14 @@ public class  SetBase {
 	
 
 
-	public Object Value(){
+	public Type Value(){
 		return value;
 	}	
 
 	public Object[] ValueArray(){
 		return valueArray;
 	}	
-	public Object Value(Object value){
+	public Object Value(Type value){
 			if(value==this.value)return this.value;
 		this.value=value;
 		table.putValue(key, this.value);
