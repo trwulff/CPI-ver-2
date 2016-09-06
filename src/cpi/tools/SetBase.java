@@ -27,9 +27,10 @@ public class  SetBase <Type>{
 	ITableListener listener=new ITableListener(){
 		public void valueChanged(ITable Table, String str, Object obj, boolean bool){
 			System.out.println(lineNumber());
-			if(((isHerdCode&&isPersistent)||isLocked)&& !isTempUnlocked){
+			if((isHerdCode&&isPersistent||isLocked)&& !isTempUnlocked){
 				System.out.println(lineNumber());
 				obj=(Object)value;
+				table.putValue(key, value);
 				return;
 			}
 			System.out.println(lineNumber());
