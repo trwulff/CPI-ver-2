@@ -1,6 +1,7 @@
 package cpi.tools;
 
 import edu.wpi.first.wpilibj.networktables.*;
+import edu.wpi.first.wpilibj.tables.*;
 import java.util.Arrays;
 
 public class  SetBase <Type>{
@@ -9,24 +10,49 @@ public class  SetBase <Type>{
 	Object  DefaultArray[];
 	String className;
 	Type value;
-	Object valueArray[];
+	Type SETvalue;
+	Type HCvalue;
 	boolean isArray=false;
 	boolean isLocked=false;
+	boolean isTempUnlocked=false;
 	boolean isFirst=true;
 	static boolean isHerdCode=true;
 	boolean isPersistent;
 	String tableName;
 	String key;
 	NetworkTable table;
+	public static NetworkTable HCtable=NetworkTable.getTable(Constants.TITLE);
 	
-// Begin Constructors
+// Begin Listeners
+	ITableListener listener=new ITableListener(){
+		public void valueChanged(ITable Table, String str, Object obj, boolean bool){
+			if((isHerdCode&&isPersistent||isLocked)&& !isTempUnlocked){
+				obj=(Object)value;
+				return;
+			}
+			isTempUnlocked=false;
+			value=(Type)obj;
+		}
+	};
+	ITableListener HClistener=new ITableListener(){
+		public void valueChanged(ITable Table, String str, Object obj, boolean bool){
+			isHerdCode=(boolean)obj;
+		}
+	};
+// End Listeners
+	
+// Begin Constructor
 	public SetBase(String table,String key,Type Default,boolean setPersistance)
 	{
 		if(isFirst){ // this is done once upon  the first instanciation
 			// Initialize NetworkTables here
 	        NetworkTable.initialize();
+	        HCtable.putBoolean(Constants.HC_KEY, true);
+	        HCtable.isPersistent(Constants.HC_KEY);
 			isFirst=false;
 		}
+			// End done once
+		
 		this.Default=Default;
 		tableName=table;
 		this.key=key;
@@ -34,19 +60,25 @@ public class  SetBase <Type>{
 		className=Default.getClass().getSimpleName();
 		System.out.println(className);
 
-
 		if(className.contains("[]")){
 			isArray=true;
 		}else{
 			isArray=false;
 		}
 		this.table=NetworkTable.getTable(Constants.TITLE+"/"+tableName);
+		if(isPersistent){
+			this.table.setPersistent(this.key);
+		}
+		else{
+			this.table.clearPersistent(this.key);
+		}
 		value=(Type)this.table.getValue(this.key, this.Default);
+		SETvalue=value;
 		this.table.putValue(key, value);
 		System.out.println ("SetBase - #"+lineNumber());
 		
 	}	
-	// End of Constructors	
+	// End of Constructor	
 	
 
 
@@ -55,7 +87,6 @@ public class  SetBase <Type>{
 	}	
 
 	public Type Value(Type value){
-			if(value==this.value)return this.value;
 		this.value=value;
 		table.putValue(key, this.value);
 		return this.value;
@@ -63,6 +94,16 @@ public class  SetBase <Type>{
 	
 	public void Lock(boolean setLocked){
 		isLocked=setLocked;
+	}	
+	public void tempLock(){
+		isTempUnlocked=true;
+	}
+	
+	public void addListener(ITableListener listener){
+		table.addTableListener(key, listener, true);
+	}
+	public void addHCListener(ITableListener listener){
+		HCtable.addTableListener(key, listener, true);
 	}
 
 	public static int lineNumber(){
