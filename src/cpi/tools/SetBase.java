@@ -48,7 +48,8 @@ public class  SetBase <Type>{
 			// Initialize NetworkTables here
 	        NetworkTable.initialize();
 	        HCtable.putBoolean(Constants.HC_KEY, true);
-	        HCtable.isPersistent(Constants.HC_KEY);
+	        HCtable.clearPersistent(Constants.HC_KEY);
+	        HCtable.addTableListener(Constants.HC_KEY, HClistener, true);
 			isFirst=false;
 		}
 			// End done once
@@ -72,6 +73,7 @@ public class  SetBase <Type>{
 		else{
 			this.table.clearPersistent(this.key);
 		}
+		this.table.addTableListener(this.key, listener, true);
 		value=(Type)this.table.getValue(this.key, this.Default);
 		SETvalue=value;
 		this.table.putValue(key, value);
