@@ -26,14 +26,14 @@ public class  SetBase <Type>{
 // Begin Listeners
 	ITableListener listener=new ITableListener(){
 		public void valueChanged(ITable Table, String str, Object obj, boolean bool){
-			System.out.println(lineNumber());
+			System.out.println ("SetBase - #"+lineNumber());
 			if((isHerdCode&&isPersistent||isLocked)&& !isTempUnlocked){
-				System.out.println(lineNumber());
+				System.out.println ("SetBase - #"+lineNumber());
 				obj=(Object)value;
 				table.putValue(key, value);
 				return;
 			}
-			System.out.println(lineNumber());
+			System.out.println ("SetBase - #"+lineNumber());
 			isTempUnlocked=false;
 			value=(Type)obj;
 		}
@@ -72,16 +72,16 @@ public class  SetBase <Type>{
 			isArray=false;
 		}
 		this.table=NetworkTable.getTable(Constants.TITLE+"/"+tableName);
+		this.table.addTableListener(this.key, listener, true);
+		value=(Type)this.table.getValue(this.key, this.Default);
+		SETvalue=value;
+		this.table.putValue(key, value);
 		if(isPersistent){
 			this.table.setPersistent(this.key);
 		}
 		else{
 			this.table.clearPersistent(this.key);
 		}
-		this.table.addTableListener(this.key, listener, true);
-		value=(Type)this.table.getValue(this.key, this.Default);
-		SETvalue=value;
-		this.table.putValue(key, value);
 		System.out.println ("SetBase - #"+lineNumber());
 		
 	}	
