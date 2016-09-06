@@ -26,16 +26,20 @@ public class  SetBase <Type>{
 // Begin Listeners
 	ITableListener listener=new ITableListener(){
 		public void valueChanged(ITable Table, String str, Object obj, boolean bool){
-			if((isHerdCode&&isPersistent||isLocked)&& !isTempUnlocked){
+			System.out.println(lineNumber());
+			if(((isHerdCode&&isPersistent)||isLocked)&& !isTempUnlocked){
+				System.out.println(lineNumber());
 				obj=(Object)value;
 				return;
 			}
+			System.out.println(lineNumber());
 			isTempUnlocked=false;
 			value=(Type)obj;
 		}
 	};
 	ITableListener HClistener=new ITableListener(){
 		public void valueChanged(ITable Table, String str, Object obj, boolean bool){
+			System.out.println(lineNumber());
 			isHerdCode=(boolean)obj;
 		}
 	};
