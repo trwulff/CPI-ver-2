@@ -40,7 +40,7 @@ public class  SetBase <Type>{
 	};
 	ITableListener HClistener=new ITableListener(){
 		public void valueChanged(ITable Table, String str, Object obj, boolean bool){
-			System.out.println(lineNumber());
+			System.out.println ("SetBase - #"+lineNumber());
 			isHerdCode=(boolean)obj;
 		}
 	};
@@ -73,7 +73,7 @@ public class  SetBase <Type>{
 		}
 		this.table=NetworkTable.getTable(Constants.TITLE+"/"+tableName);
 		this.table.addTableListener(this.key, listener, true);
-		value=(Type)this.table.getValue(this.key, this.Default);
+		value=getValue(this.key, this.Default);
 		SETvalue=value;
 		this.table.putValue(key, value);
 		if(isPersistent){
@@ -115,5 +115,23 @@ public class  SetBase <Type>{
 
 	public static int lineNumber(){
 		return Thread.currentThread().getStackTrace()[2].getLineNumber();
+	}
+	Type getValue(String key, Type defaultValue){
+		Type tmpValue=Default;
+		switch(className){
+
+		case "Boolean[]":
+			tmpValue=(Type)table.getBooleanArray(key, (Boolean[])defaultValue);
+			break;
+		case "Double[]":
+			tmpValue=(Type)table.getNumberArray(key, (Double[])defaultValue);
+			break;
+		case "String[]":
+			tmpValue=(Type)table.getStringArray(key, (String[])defaultValue);
+			break;
+		default:
+			tmpValue=(Type)table.getValue(key, (Type)defaultValue);
+		}
+		return tmpValue;
 	}
 }
