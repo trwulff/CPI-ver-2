@@ -20,6 +20,7 @@ public class  SetBase <Type>{
 	String tableName;
 	String key;
 	NetworkTable table;
+	NetworkTable HCconstantsTable;
 	public static NetworkTable HCtable=NetworkTable.getTable(Constants.TITLE);
 	
 // Begin Listeners
@@ -37,6 +38,11 @@ public class  SetBase <Type>{
 	ITableListener HClistener=new ITableListener(){
 		public void valueChanged(ITable Table, String str, Object obj, boolean bool){
 			isHerdCode=(boolean)obj;
+		}
+	};
+	ITableListener HCconstantsTablelistener=new ITableListener(){
+		public void valueChanged(ITable Table, String str, Object obj, boolean bool){
+			obj=(Object)HCvalue;
 		}
 	};
 // End Listeners
@@ -78,6 +84,9 @@ public class  SetBase <Type>{
 		else{
 			this.table.clearPersistent(this.key);
 		}
+		HCconstantsTable=NetworkTable.getTable(Constants.TITLE+"/"+Constants.HC_TABLE+"/"+tableName);
+		HCvalue=(Type) HCconstantsTable.getValue(this.key, this.Default);
+		HCconstantsTable.addTableListener(this.key, HCconstantsTablelistener, true); // Permanently locked
 	}	
 	// End of Constructor	
 	
