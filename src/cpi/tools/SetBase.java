@@ -10,7 +10,6 @@ public class  SetBase <Type>{
 	Object  DefaultArray[];
 	String className;
 	Type value;
-	Type SETvalue;
 	Type HCvalue;
 	boolean isArray=false;
 	boolean isLocked=false;
@@ -52,6 +51,7 @@ public class  SetBase <Type>{
 	        HCtable.clearPersistent(Constants.HC_KEY);
 	        HCtable.addTableListener(Constants.HC_KEY, HClistener, true);
 			isFirst=false;
+			HCconstants.set();
 		}
 			// End done once
 		
@@ -70,15 +70,14 @@ public class  SetBase <Type>{
 		this.table.addTableListener(this.key, listener, true);
 		tempLock();
 		value=getValue(this.key, this.Default);
-		SETvalue=value;
 		this.table.putValue(key, value);
 		if(isPersistent){
 			this.table.setPersistent(this.key);
+			
 		}
 		else{
 			this.table.clearPersistent(this.key);
 		}
-		
 	}	
 	// End of Constructor	
 	
