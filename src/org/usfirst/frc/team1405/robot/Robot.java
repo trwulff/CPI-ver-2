@@ -30,7 +30,7 @@ public class Robot extends IterativeRobot {
         System.out.println("dASet= ("+dASet.Value()[0]+", "+dASet.Value()[1]+", "+dASet.Value()[1]+")");
         Double Di=5.;
         dSet=new Set<Double>("Table","Name2",Di);
-        System.out.println("dSet="+dSet.Value(10.));
+        System.out.println("dSet="+dSet.Value());
         System.out.println ("End robotInit");
         
         

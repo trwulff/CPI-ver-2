@@ -73,6 +73,7 @@ public class  SetBase <Type>{
 		}
 		this.table=NetworkTable.getTable(Constants.TITLE+"/"+tableName);
 		this.table.addTableListener(this.key, listener, true);
+		tempLock();
 		value=getValue(this.key, this.Default);
 		SETvalue=value;
 		this.table.putValue(key, value);
