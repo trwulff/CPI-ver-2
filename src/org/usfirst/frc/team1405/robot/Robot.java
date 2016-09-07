@@ -27,7 +27,7 @@ public class Robot extends IterativeRobot {
         System.out.println ("Robot - #"+cpi.tools.SetBase.lineNumber());
         dASet=new Set<Double[]>("Table","Name1",D);
         System.out.println ("Robot - #"+cpi.tools.SetBase.lineNumber());
-        System.out.println("dASet= ("+dASet.Value()[0]+", "+dASet.Value()[1]+", "+dASet.Value()[1]+")");
+        System.out.println("dASet= ("+dASet.Value()[0]+", "+dASet.Value()[1]+", "+dASet.Value()[2]+")");
         Double Di=5.;
         dSet=new Set<Double>("Table","Name2",Di);
         System.out.println("dSet="+dSet.Value());

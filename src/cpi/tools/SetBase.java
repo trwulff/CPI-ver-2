@@ -26,21 +26,17 @@ public class  SetBase <Type>{
 // Begin Listeners
 	ITableListener listener=new ITableListener(){
 		public void valueChanged(ITable Table, String str, Object obj, boolean bool){
-			System.out.println ("SetBase - #"+lineNumber());
 			if((isHerdCode&&isPersistent||isLocked)&& !isTempUnlocked){
-				System.out.println ("SetBase - #"+lineNumber());
 				obj=(Object)value;
 				table.putValue(key, value);
 				return;
 			}
-			System.out.println ("SetBase - #"+lineNumber());
 			isTempUnlocked=false;
 			value=(Type)obj;
 		}
 	};
 	ITableListener HClistener=new ITableListener(){
 		public void valueChanged(ITable Table, String str, Object obj, boolean bool){
-			System.out.println ("SetBase - #"+lineNumber());
 			isHerdCode=(boolean)obj;
 		}
 	};
@@ -64,7 +60,6 @@ public class  SetBase <Type>{
 		this.key=key;
 		isPersistent=setPersistance;
 		className=Default.getClass().getSimpleName();
-		System.out.println(className);
 
 		if(className.contains("[]")){
 			isArray=true;
@@ -83,7 +78,6 @@ public class  SetBase <Type>{
 		else{
 			this.table.clearPersistent(this.key);
 		}
-		System.out.println ("SetBase - #"+lineNumber());
 		
 	}	
 	// End of Constructor	
