@@ -15,7 +15,7 @@ public class  SetBase <Type>{
 	boolean isLocked=false;
 	boolean isTempUnlocked=false;
 	boolean isFirst=true;
-	static boolean isHerdCode=true;
+	static boolean isHardCode=true;
 	boolean isPersistent;
 	String tableName;
 	String key;
@@ -26,7 +26,7 @@ public class  SetBase <Type>{
 // Begin Listeners
 	ITableListener listener=new ITableListener(){
 		public void valueChanged(ITable Table, String str, Object obj, boolean bool){
-			if((isHerdCode&&isPersistent||isLocked)&& !isTempUnlocked){
+			if((isHardCode&&isPersistent||isLocked)&& !isTempUnlocked){
 				obj=(Object)value;
 				table.putValue(key, value);
 				return;
@@ -37,12 +37,12 @@ public class  SetBase <Type>{
 	};
 	ITableListener HClistener=new ITableListener(){
 		public void valueChanged(ITable Table, String str, Object obj, boolean bool){
-			isHerdCode=(boolean)obj;
+			isHardCode=(boolean)obj;
 		}
 	};
 	ITableListener HCconstantsTablelistener=new ITableListener(){
 		public void valueChanged(ITable Table, String str, Object obj, boolean bool){
-			obj=(Object)HCvalue;
+			obj=HCvalue;
 		}
 	};
 // End Listeners
@@ -93,10 +93,12 @@ public class  SetBase <Type>{
 
 
 	public Type Value(){
+		if(isHardCode)return HCvalue;
 		return value;
 	}	
 
 	public Type Value(Type value){
+		if(isHardCode)return HCvalue;
 		this.value=value;
 		table.putValue(key, this.value);
 		return this.value;
