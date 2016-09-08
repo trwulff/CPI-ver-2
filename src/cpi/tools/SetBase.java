@@ -2,7 +2,7 @@ package cpi.tools;
 
 import edu.wpi.first.wpilibj.networktables.*;
 import edu.wpi.first.wpilibj.tables.*;
-import java.util.Arrays;
+import java.util.Vector;
 
 public class  SetBase <Type>{
 
@@ -21,7 +21,9 @@ public class  SetBase <Type>{
 	String key;
 	NetworkTable table;
 	NetworkTable HCconstantsTable;
-	public static NetworkTable HCtable=NetworkTable.getTable(Constants.TITLE);
+	public static final Vector<String> tablesAndKeys=new Vector<String>();
+	public static final NetworkTable HCtable=NetworkTable.getTable(Constants.TITLE);
+	public static final NetworkTable HCtransferTable=NetworkTable.getTable(Constants.TABLE_AND_KEYS_TABLE);
 	
 // Begin Listeners
 	ITableListener listener=new ITableListener(){
@@ -45,6 +47,13 @@ public class  SetBase <Type>{
 			obj=HCvalue;
 		}
 	};
+	ITableListener HCtransferTablelistener=new ITableListener(){
+		public void valueChanged(ITable Table, String str, Object obj, boolean bool){
+			String[]list=(String[])tablesAndKeys.toArray();
+			HCtransferTable.putStringArray(Constants.TABLE_AND_KEYS_KEY, list);
+			
+		}
+	};
 // End Listeners
 	
 // Begin Constructor
@@ -56,6 +65,7 @@ public class  SetBase <Type>{
 	        HCtable.putBoolean(Constants.HC_KEY, true);
 	        HCtable.clearPersistent(Constants.HC_KEY);
 	        HCtable.addTableListener(Constants.HC_KEY, HClistener, true);
+	        HCtransferTable.addTableListener(Constants.TRANSFER_STATE_KEY, HCconstantsTablelistener, true);
 			isFirst=false;
 			HCconstants.set();
 		}
@@ -87,6 +97,7 @@ public class  SetBase <Type>{
 		HCconstantsTable=NetworkTable.getTable(Constants.TITLE+"/"+Constants.HC_TABLE+"/"+tableName);
 		HCvalue=(Type) HCconstantsTable.getValue(this.key, this.Default);
 		HCconstantsTable.addTableListener(this.key, HCconstantsTablelistener, true); // Permanently locked
+		tablesAndKeys.addElement(Constants.TITLE+"/"+tableName+Constants.TABLE_AND_KEYS_SEPARATOR+this.key);
 	}	
 	// End of Constructor	
 	
