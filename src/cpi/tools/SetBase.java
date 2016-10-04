@@ -31,7 +31,7 @@ public class  SetBase <Type>{
 	boolean isLocked=false;
 	boolean isTempUnlocked=false;
 	boolean isFirst=true;
-	static boolean isHardCode=true;
+	protected static boolean isHardCode=false;
 	boolean isPersistent;
 	String tableName;
 	String key;
