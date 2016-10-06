@@ -22,8 +22,8 @@ public class  Net <Type> extends SetBase <Type> {
 	 * Net can share data of type Type with other devices such as the driver Station laptop through the NetworkTables Class.
 	 * 
 	 * @param table
-	 * table identifies the subtable name of the master robot tabele neme specified in class cpi.tools.Constants.TITLE .
-	 * eg. If Constants.TITLE = "Robot" and table = "Name1", the full table path name is "Robot/Name1"
+	 * table identifies the subtable name of the master robot tabele neme specified in class cpi.Set.TITLE .
+	 * eg. If TITLE = "Robot" and table = "Name1", the full table path name is "Robot/Name1"
 	 * Slashes(/) may be used to define tables of subtables.
 	 * @param key
 	 * key is the final key identifier of type Type. Do not use / (slash) as part of key

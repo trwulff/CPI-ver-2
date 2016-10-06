@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import cpi.Set;
+import cpi.*;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -17,6 +17,7 @@ import cpi.Set;
 public class Robot extends IterativeRobot {
 	Set <Double[]> dASet;
 	Set<Double> dSet;
+	XBox360 pilot = new XBox360(0);
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -61,6 +62,10 @@ public class Robot extends IterativeRobot {
      */
     public void testPeriodic() {
     
+    }    
+    public void disabledPeriodic(){
+    	cpi.autoSupportClasses.Set.ChangeMode(pilot.aButton());
+    	cpi.autoSupportClasses.Set.disabledPeriodic();
     }
     
 }
